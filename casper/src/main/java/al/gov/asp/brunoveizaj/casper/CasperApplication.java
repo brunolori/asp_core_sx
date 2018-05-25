@@ -1,12 +1,12 @@
-package al.gov.asp.brunoveizaj.csx;
+package al.gov.asp.brunoveizaj.casper;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CsxApplication {
+public class CasperApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CsxApplication.class, args);
+		SpringApplication.run(CasperApplication.class, args);
 	}
 }
