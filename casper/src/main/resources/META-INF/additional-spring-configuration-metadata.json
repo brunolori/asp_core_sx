@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "spring.tims.datasource.driver-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.tims.datasource.driver-class-name'"
+  },
+  {
+    "name": "spring.tims.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.tims.datasource.password'"
+  },
+  {
+    "name": "spring.tims.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.tims.datasource.username'"
+  },
+  {
+    "name": "spring.tims.datasource.url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.tims.datasource.url'"
+  }
+]}

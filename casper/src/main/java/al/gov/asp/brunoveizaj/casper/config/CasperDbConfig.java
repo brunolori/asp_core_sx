@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -23,22 +24,37 @@ public class CasperDbConfig {
 
 	@Primary
 	@Bean(name = "dataSource")
-	@ConfigurationProperties(prefix = "spring.datasource")
-	public DataSource dataSource() {
-		return DataSourceBuilder.create().build();
+	//@ConfigurationProperties(prefix = "spring.datasource")
+	public DataSource dataSource() {	
+		
+		DriverManagerDataSource ds = new DriverManagerDataSource();
+		ds.setDriverClassName("org.postgresql.Driver");
+		ds.setUrl("jdbc:postgresql://192.168.150.58:5432/repository");
+		ds.setPassword("admin");
+		ds.setUsername("postgres");
+		
+		return ds;
+		
+	//	return DataSourceBuilder.create().build();
 	}
 
 	@Primary
 	@Bean(name = "entityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
-			@Qualifier("dataSource") DataSource dataSource) {
-		return builder.dataSource(dataSource).packages("al.gov.asp.casper.entities").persistenceUnit("casper").build();
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder, @Qualifier("dataSource") DataSource dataSource) {
+				
+		return builder.dataSource(dataSource).packages("al.gov.asp.brunoveizaj.casper.entities").persistenceUnit("casper").build();
 	}
 
 	@Primary
 	@Bean(name = "transactionManager")
-	public PlatformTransactionManager transactionManager(
-			@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
+	public PlatformTransactionManager transactionManager(@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
+		
 		return new JpaTransactionManager(entityManagerFactory);
 	}
+	
+	
+	
+	
+	
+	
 }
