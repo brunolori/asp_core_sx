@@ -18,5 +18,10 @@
     "name": "spring.tims.datasource.url",
     "type": "java.lang.String",
     "description": "A description for 'spring.tims.datasource.url'"
+  },
+  {
+    "name": "spring.tims.jpa.hibernate.dialect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.tims.jpa.hibernate.dialect'"
   }
 ]}

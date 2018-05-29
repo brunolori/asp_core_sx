@@ -111,6 +111,50 @@ public class HomelandClient {
 
 	}
 	
+	public void savePassport(PassportDTO dto)
+	{
+		final String BASE_URL = IHL.SERVER+"/import/save/passport";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<PassportDTO>(dto,headers);
+
+		ResponseEntity<Void> response = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,Void.class);
+		
+		if(response.getStatusCodeValue() != HttpCode.OK)
+		{
+			throw new ApiException("Error save/passport",4);
+		}
+
+	}
+	
+	public void saveVehicle(VehicleDTO dto)
+	{
+		final String BASE_URL = IHL.SERVER+"/import/save/vehicle";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<VehicleDTO>(dto,headers);
+
+		ResponseEntity<Void> response = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,Void.class);
+		
+		if(response.getStatusCodeValue() != HttpCode.OK)
+		{
+			throw new ApiException("Error save/vehicle",4);
+		}
+
+	}
+	
 	
 	
 	

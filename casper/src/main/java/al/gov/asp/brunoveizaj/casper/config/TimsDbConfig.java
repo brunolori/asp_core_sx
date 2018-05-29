@@ -1,11 +1,11 @@
 package al.gov.asp.brunoveizaj.casper.config;
 
+import java.util.HashMap;
+
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +32,7 @@ public class TimsDbConfig {
 		ds.setPassword("VEIZAJB");
 		ds.setUsername("VEIZAJB");
 		
+		
 		return ds;
 		
 		//return DataSourceBuilder.create().build();
@@ -40,8 +41,21 @@ public class TimsDbConfig {
 	@Bean(name = "timsEntityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean timsEntityManagerFactory(EntityManagerFactoryBuilder builder,
 			@Qualifier("timsDataSource") DataSource dataSource) {
-		return builder.dataSource(dataSource).packages("al.gov.asp.brunoveizaj.casper.tims.entities").persistenceUnit("tims")
-				.build();
+		
+		/*LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+		em.setDataSource(dataSource);
+		em.setPackagesToScan("al.gov.asp.brunoveizaj.casper.tims.entities");
+		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		em.setJpaVendorAdapter(vendorAdapter);
+		*/
+		HashMap<String, Object> props = new HashMap<>();
+		props.put("hibernate.dialect", "");
+		
+		//em.setJpaPropertyMap(props);
+		//return em;
+		
+		
+		return builder.dataSource(dataSource).properties(props).packages("al.gov.asp.brunoveizaj.casper.tims.entities").persistenceUnit("tims").build();
 	}
 
 	@Bean(name = "timsTransactionManager")
