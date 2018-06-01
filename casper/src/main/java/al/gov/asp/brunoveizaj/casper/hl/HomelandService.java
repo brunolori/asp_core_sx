@@ -1,18 +1,22 @@
 package al.gov.asp.brunoveizaj.casper.hl;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import al.gov.asp.brunoveizaj.casper.constants.ITicket;
 import al.gov.asp.brunoveizaj.casper.dao.CardDAO;
 import al.gov.asp.brunoveizaj.casper.dao.PassportDAO;
-import al.gov.asp.brunoveizaj.casper.dao.VehicleDAO;
+import al.gov.asp.brunoveizaj.casper.dao.PhoneDAO;
 import al.gov.asp.brunoveizaj.casper.entities.Card;
 import al.gov.asp.brunoveizaj.casper.entities.Passport;
+import al.gov.asp.brunoveizaj.casper.entities.Phone;
 import al.gov.asp.brunoveizaj.casper.mail.EmailService;
+import al.gov.asp.brunoveizaj.casper.tims.dao.TicketDAO;
+import al.gov.asp.brunoveizaj.casper.tims.dao.VehicleDAO;
+import al.gov.asp.brunoveizaj.casper.tims.entities.Ticket;
 import al.gov.asp.brunoveizaj.casper.tims.entities.Vehicle;
 import al.gov.asp.brunoveizaj.casper.utils.DateUtil;
 
@@ -26,14 +30,18 @@ public class HomelandService {
 	PassportDAO passportDAO;
 	@Autowired
 	VehicleDAO vehicleDAO;
+	@Autowired
+	PhoneDAO phoneDAO;
+	@Autowired
+	TicketDAO ticketDAO;
 	@Autowired 
 	EmailService mailService;
 	
-	@Scheduled(cron="0 41 15 * * *")
+	@Scheduled(cron="0 19 14 * * *")
 	public void startCards()
 	{
 		
-		mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDC start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
+	//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDC start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
 				
 		HomelandClient client = new HomelandClient();
 		String error = "";
@@ -97,23 +105,23 @@ public class HomelandService {
 			imports.setTotal(count);
 			client.closeImport(imports);
 			
-			mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDC END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
+		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDC END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
 			
 			
 		}catch(Exception e)
 		{
-			mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending IDC", 
-					DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-										+e.getMessage());			
+		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending IDC", 
+			//		DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
+			//							+e.getMessage());			
 			e.printStackTrace();
 		}
 	}
 	
-	@Scheduled(cron="0 22 10 * * *")
+	@Scheduled(cron="0 20 14 * * *")
 	public void startPassports()
 	{
 		
-		mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDP start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
+		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDP start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
 				
 		HomelandClient client = new HomelandClient();
 		String error = "";
@@ -170,21 +178,21 @@ public class HomelandService {
 			imports.setTotal(count);
 			client.closeImport(imports);
 			
-			mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDP END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
+		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDP END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
 			
 			
 		}catch(Exception e)
 		{
-			mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending IDP", 
-					DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-										+e.getMessage());			
+		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending IDP", 
+		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
+		//								+e.getMessage());			
 			e.printStackTrace();
 		}
 	}
 	
 	
 	
-	@Scheduled(cron="0 19 11 * * *")
+	@Scheduled(cron="0 21 14 * * *")
 	public void startVehicles()
 	{
 		
@@ -240,7 +248,7 @@ public class HomelandService {
 			imports.setTotal(count);
 			client.closeImport(imports);
 			
-			mailService.sendEmail("bruno.veizaj@asp.gov.al", "Vehicle END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
+		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Vehicle END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
 			
 			
 		}catch(Exception e)
@@ -254,6 +262,143 @@ public class HomelandService {
 	
 	
 	
+	
+	@Scheduled(cron="0 22 14 * * *")
+	public void startPhones()
+	{
+		
+		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "Phone start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
+				
+		HomelandClient client = new HomelandClient();
+		String error = "";
+		
+		try {
+						
+			ImportDTO imports = client.openImport(Type.PHONE);
+			
+			Long firstId = client.getLastRid(Type.PHONE);
+			Integer LIMIT = 50000;
+			boolean cont = true;
+			int count = 0;
+			
+			while(cont)
+			{
+				List<Phone> phones = phoneDAO.searchPhone(firstId + 1, LIMIT);
+				if(phones != null && !phones.isEmpty())
+				{
+					for(Phone c : phones)
+					{
+						PhoneDTO dto = new PhoneDTO();
+						
+
+						dto.setId((int)c.getId());
+						dto.setDataSource(c.getSource());
+						dto.setDob(c.getDob());
+						dto.setFatherName(c.getFatherName());
+						dto.setMotherName(c.getMotherName());
+						dto.setName(c.getName());
+						dto.setNid(c.getNid());
+						dto.setPhone(c.getPhone());
+						dto.setRegDate(DateUtil.formatDate(c.getInsertDate()));
+						dto.setSurname(c.getSurname());
+						
+						client.savePhone(dto);
+						
+						count ++;
+						firstId = Long.valueOf(c.getId()); 
+						error = "["+firstId+"] "+ c.getPhone();
+						System.out.println(error);
+					}
+				}
+				else
+				{
+					cont = false;
+				}
+			}
+			
+			imports.setTotal(count);
+			client.closeImport(imports);
+			
+		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Phone END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
+			
+			
+		}catch(Exception e)
+		{
+			//mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending Phone", 
+			//		DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
+				//						+e.getMessage());			
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	@Scheduled(cron="0 23 14 * * *")
+	public void startTicket()
+	{
+		
+		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "TICKET start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
+				
+		HomelandClient client = new HomelandClient();
+		String error = "";
+		
+		try {
+						
+			ImportDTO imports = client.openImport(Type.TICKET);
+			
+			Long firstId = client.getLastRid(Type.TICKET);
+			Integer LIMIT = 50000;
+			boolean cont = true;
+			int count = 0;
+			
+			while(cont)
+			{
+				List<Ticket> tickets = ticketDAO.searchTicket(firstId + 1, LIMIT);
+				if(tickets != null && !tickets.isEmpty())
+				{
+					for(Ticket c : tickets)
+					{
+						TicketDTO dto = new TicketDTO();
+						
+
+						dto.setId((int)c.getId());
+						dto.setAmount(c.getAmount());
+						dto.setOfficer(c.getOfficer());
+						dto.setOwner(c.getOwner());
+						dto.setOwnerAddress(c.getOwnerAddress());
+						dto.setPlate(c.getPlate());
+						dto.setProducer(c.getProducer());
+						dto.setSerialNo(c.getSerialNo());
+						dto.setStatus(c.getPaid()>0?ITicket.PAYED:ITicket.NOT_PAYED);
+						
+						client.saveTicket(dto);
+						
+						count ++;
+						firstId = Long.valueOf(c.getId()); 
+						error = "["+firstId+"] "+ c.getSerialNo();
+						System.out.println(error);
+					}
+				}
+				else
+				{
+					cont = false;
+				}
+			}
+			
+			imports.setTotal(count);
+			client.closeImport(imports);
+			
+			//mailService.sendEmail("bruno.veizaj@asp.gov.al", "TICKET END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
+			
+			
+		}catch(Exception e)
+		{
+			//mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending Ticket", 
+			//		DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
+				//						+e.getMessage());			
+			e.printStackTrace();
+		}
+	}
 	
 	
 	

@@ -1,4 +1,4 @@
-package al.gov.asp.brunoveizaj.casper.dao;
+package al.gov.asp.brunoveizaj.casper.tims.dao;
 
 import java.util.List;
 

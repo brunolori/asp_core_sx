@@ -155,6 +155,49 @@ public class HomelandClient {
 
 	}
 	
+	public void saveTicket(TicketDTO dto)
+	{
+		final String BASE_URL = IHL.SERVER+"/import/save/ticket";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<TicketDTO>(dto,headers);
+
+		ResponseEntity<Void> response = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,Void.class);
+		
+		if(response.getStatusCodeValue() != HttpCode.OK)
+		{
+			throw new ApiException("Error save/ticket",4);
+		}
+
+	}
+	
+	public void savePhone(PhoneDTO dto)
+	{
+		final String BASE_URL = IHL.SERVER+"/import/save/phone";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<PhoneDTO>(dto,headers);
+
+		ResponseEntity<Void> response = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,Void.class);
+		
+		if(response.getStatusCodeValue() != HttpCode.OK)
+		{
+			throw new ApiException("Error save/phone",4);
+		}
+
+	}
 	
 	
 	
