@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
+
 
 /**
  *
@@ -27,11 +27,13 @@ public class PhotoCard implements Serializable {
     private String idc;   
     @Column(name = "\"IDC\"")
     private String myIdc;   
-    @Lob
+    
+   // @Lob
     @Column(name = "\"PHOTO\"")
+    //@Type(type="org.hibernate.type.PrimitiveByteArrayBlobType")
     private byte[] photo;
     @Column(name = "\"CARD_ID\"")
-    private int cardId;
+    private Long cardId;
 
     public PhotoCard() {
     }
@@ -64,11 +66,11 @@ public class PhotoCard implements Serializable {
         this.photo = photo;
     }
 
-    public int getCardId() {
+    public Long getCardId() {
         return cardId;
     }
 
-    public void setCardId(int cardId) {
+    public void setCardId(Long cardId) {
         this.cardId = cardId;
     }
 

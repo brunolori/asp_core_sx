@@ -10,7 +10,7 @@ public class TicketDTO {
 	    private String ticketDate;
 	    private String ticketPlace;
 	    private String officer;
-	    private double amount;
+	    private Double amount;
 	    private String plate;
 	    private String producer;
 	    private String owner;
@@ -52,10 +52,10 @@ public class TicketDTO {
 		public void setOfficer(String officer) {
 			this.officer = officer;
 		}
-		public double getAmount() {
+		public Double getAmount() {
 			return amount;
 		}
-		public void setAmount(double amount) {
+		public void setAmount(Double amount) {
 			this.amount = amount;
 		}
 		public String getPlate() {

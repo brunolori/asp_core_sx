@@ -31,7 +31,7 @@ public class PhotoPassport implements Serializable {
     @Column(name = "\"PHOTO\"")
     private byte[] photo;
     @Column(name = "\"PASSPORT_ID\"")
-    private int passportId;
+    private Long passportId;
 
     public PhotoPassport() {
     }
@@ -64,11 +64,11 @@ public class PhotoPassport implements Serializable {
         this.photo = photo;
     }
 
-    public int getPassportId() {
+    public Long getPassportId() {
         return passportId;
     }
 
-    public void setPassportId(int passportId) {
+    public void setPassportId(Long passportId) {
         this.passportId = passportId;
     }
 

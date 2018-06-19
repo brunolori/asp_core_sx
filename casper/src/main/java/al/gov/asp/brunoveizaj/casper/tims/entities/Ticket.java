@@ -28,7 +28,7 @@ public class Ticket implements Serializable {
 	@Column(name="TICKET_ADDRESS")
 	private String ticketAddress;
 	@Column(name="AMOUNT")
-	private double amount;
+	private Double amount;
 	@Column(name="PLATE")
 	private String plate;
 	@Column(name="PRODUCER")
@@ -42,7 +42,7 @@ public class Ticket implements Serializable {
 	@Column(name="VIOLATOR_NID")
 	private String violatorNid;
 	@Column(name="PAYED")
-	private int paid;
+	private Integer paid;
 	
 	
 	
@@ -76,10 +76,10 @@ public class Ticket implements Serializable {
 	public void setTicketAddress(String ticketAddress) {
 		this.ticketAddress = ticketAddress;
 	}
-	public double getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(double amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 	public String getPlate() {
@@ -118,10 +118,10 @@ public class Ticket implements Serializable {
 	public void setViolatorNid(String violatorNid) {
 		this.violatorNid = violatorNid;
 	}
-	public int getPaid() {
+	public Integer getPaid() {
 		return paid;
 	}
-	public void setPaid(int paid) {
+	public void setPaid(Integer paid) {
 		this.paid = paid;
 	}
 	

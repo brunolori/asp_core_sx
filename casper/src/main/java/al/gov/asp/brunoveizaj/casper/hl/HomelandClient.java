@@ -21,7 +21,7 @@ public class HomelandClient {
 	
 	public ImportDTO openImport(String type)
 	{
-		final String BASE_URL = IHL.SERVER+"import/open";
+		final String BASE_URL = IHL.SERVER+"/import/open";
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -43,7 +43,7 @@ public class HomelandClient {
 	
 	public ImportDTO closeImport(ImportDTO dto)
 	{
-		final String BASE_URL = IHL.SERVER+"import/close";
+		final String BASE_URL = IHL.SERVER+"/import/close";
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -88,6 +88,55 @@ public class HomelandClient {
 
 		return null;
 	}
+	
+	public String getLastBorderDate(String event,boolean isForeign)
+	{
+		final String BASE_URL = IHL.SERVER+"/import/lastBorderDate/"+event+"/"+(isForeign?1:0);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,String.class);
+		
+		if(response.getStatusCodeValue() == HttpCode.OK)
+		{
+			return response.getBody();
+		}
+
+		return null;
+	}
+	
+	public String getFirstBorderDate(String event,boolean isForeign)
+	{
+		final String BASE_URL = IHL.SERVER+"/import/firstBorderDate/"+event+"/"+(isForeign?1:0);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,String.class);
+		
+		if(response.getStatusCodeValue() == HttpCode.OK)
+		{
+			return response.getBody();
+		}
+
+		return null;
+	}
+	
+	
+	
 	
 	public void saveCard(CardDTO dto)
 	{
@@ -195,6 +244,95 @@ public class HomelandClient {
 		if(response.getStatusCodeValue() != HttpCode.OK)
 		{
 			throw new ApiException("Error save/phone",4);
+		}
+
+	}
+	
+	public void savePhotoCard(PhotoDTO dto)
+	{
+		final String BASE_URL = IHL.SERVER+"/import/save/photoCard";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+				
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<PhotoDTO>(dto,headers);
+
+		ResponseEntity<Void> response = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,Void.class);
+		
+		if(response.getStatusCodeValue() != HttpCode.OK)
+		{
+			throw new ApiException("Error save/photoCard",4);
+		}
+
+	}
+	
+	public void savePhotoPassport(PhotoDTO dto)
+	{
+		final String BASE_URL = IHL.SERVER+"/import/save/photoPassport";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<PhotoDTO>(dto,headers);
+
+		ResponseEntity<Void> response = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,Void.class);
+		
+		if(response.getStatusCodeValue() != HttpCode.OK)
+		{
+			throw new ApiException("Error save/photoPassport",4);
+		}
+
+	}
+	
+	
+	public void saveBorder(BorderDTO dto)
+	{
+		final String BASE_URL = IHL.SERVER+"/import/save/border";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<BorderDTO>(dto,headers);
+
+		ResponseEntity<Void> response = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,Void.class);
+		
+		if(response.getStatusCodeValue() != HttpCode.OK)
+		{
+			throw new ApiException("Error save/border",4);
+		}
+
+	}
+	
+	public void saveBorder(BorderList dto)
+	{
+		final String BASE_URL = IHL.SERVER+"/import/save/borderList";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<BorderList>(dto,headers);
+
+		ResponseEntity<Void> response = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,Void.class);
+		
+		if(response.getStatusCodeValue() != HttpCode.OK)
+		{
+			throw new ApiException("Error save/borderList",4);
 		}
 
 	}
