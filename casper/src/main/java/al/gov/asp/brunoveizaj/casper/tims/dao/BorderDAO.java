@@ -48,16 +48,14 @@ public class BorderDAO {
 				TAB = ExitAL.class.getName();
 			}
 		}
-		
-		System.out.println("TAB: "+TAB);
-		
+				
 		
 		Calendar c = Calendar.getInstance();
 		c.setTime(fromDate);
 		c.add(Calendar.DATE, 1);
 		Date nextDate = c.getTime();
 		
-		return em.createQuery("SELECT t FROM "+TAB+" t where t.doe >= :e_date and t.doe<:next_date ORDER BY t.doe")
+		return em.createQuery("SELECT t FROM "+TAB+" t where t.id.crossingDate >= :e_date and t.id.crossingDate < :next_date ORDER BY t.id.crossingDate")
 				.setParameter("e_date", fromDate)
 				.setParameter("next_date", nextDate)
 				.getResultList();

@@ -18,7 +18,7 @@ public class SchedulerConfig implements SchedulingConfigurer {
 		
 		tpts.setPoolSize(POOL_SIZE);
 		tpts.initialize();
-		
+	
 		str.setTaskScheduler(tpts);
 		
 	}

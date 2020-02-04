@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -27,7 +26,7 @@ public class PhotoPassport implements Serializable {
     private String idp;   
     @Column(name = "\"IDP\"")
     private String myIdp;   
-    @Lob
+  //  @Lob
     @Column(name = "\"PHOTO\"")
     private byte[] photo;
     @Column(name = "\"PASSPORT_ID\"")

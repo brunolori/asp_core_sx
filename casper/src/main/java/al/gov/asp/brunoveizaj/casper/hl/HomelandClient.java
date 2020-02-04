@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -320,7 +321,11 @@ public class HomelandClient {
 		final String BASE_URL = IHL.SERVER+"/import/save/borderList";
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
 		
-		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpComponentsClientHttpRequestFactory clientRequestFactory = new HttpComponentsClientHttpRequestFactory();
+		clientRequestFactory.setReadTimeout(25200000);//7 ore
+		
+		RestTemplate restTemplate = new RestTemplate(clientRequestFactory);
 		restTemplate.setErrorHandler(new ApiErrorHandler());
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -335,6 +340,53 @@ public class HomelandClient {
 			throw new ApiException("Error save/borderList",4);
 		}
 
+	}
+
+
+	public void saveTicket(TicketList tl) {
+		
+		final String BASE_URL = IHL.SERVER+"/import/save/ticketList";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<TicketList>(tl,headers);
+
+		ResponseEntity<Void> response = restTemplate.exchange(builder.toUriString(), HttpMethod.POST, entity,Void.class);
+		
+		if(response.getStatusCodeValue() != HttpCode.OK)
+		{
+			throw new ApiException("Error save/ticketList",4);
+		}
+		
+	}
+
+
+	public String getLastTicketRecDate() {
+		final String BASE_URL = IHL.SERVER+"/import/lastTicketDate/";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(BASE_URL);
+		
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setErrorHandler(new ApiErrorHandler());
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		//headers.set("Authorization", "Bearer "+Util.getToken());
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity,String.class);
+		
+		if(response.getStatusCodeValue() == HttpCode.OK)
+		{
+			return response.getBody();
+		}
+
+		return null;
 	}
 	
 	

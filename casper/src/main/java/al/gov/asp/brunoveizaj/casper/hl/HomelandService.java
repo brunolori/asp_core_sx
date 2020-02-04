@@ -49,18 +49,14 @@ public class HomelandService {
 	TicketDAO ticketDAO;
 	@Autowired
 	BorderDAO borderDAO;
-	@Autowired 
+	@Autowired
 	EmailService mailService;
 	
 	@Scheduled(cron="0 00 05 * * *")
 	public void startCards()
 	{
-		
-	//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDC start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
+						
 				
-		
-		String error = "";
-		
 		try {
 			ImportDTO imports = new HomelandClient().openImport(Type.CARD);
 			
@@ -107,8 +103,6 @@ public class HomelandService {
 						
 						count ++;
 						firstId = Long.valueOf(c.getId()); 
-						error = "["+firstId+"] "+ c.getIdc();
-						System.out.println(error);
 					}
 				}
 				else
@@ -119,15 +113,10 @@ public class HomelandService {
 			
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
-			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDC END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
+						
 			
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending IDC", 
-			//		DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-			//							+e.getMessage());			
+		{			
 			e.printStackTrace();
 		}
 	}
@@ -135,11 +124,7 @@ public class HomelandService {
 	@Scheduled(cron="0 30 05 * * *")
 	public void startPassports()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDP start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		String error = "";
-		
+								
 		try {
 						
 			ImportDTO imports = new HomelandClient().openImport(Type.PASSPORT);
@@ -179,8 +164,7 @@ public class HomelandService {
 						
 						count ++;
 						firstId = Long.valueOf(c.getId()); 
-						error = "["+firstId+"] "+ c.getIdp();
-						System.out.println(error);
+
 					}
 				}
 				else
@@ -191,29 +175,19 @@ public class HomelandService {
 			
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
-			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "IDP END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
+						
 			
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending IDP", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{			
 			e.printStackTrace();
 		}
 	}
 	
 	
-	
-	@Scheduled(cron="0 30 00 * * *")
+	@Scheduled(cron="0 15 16 * * *")
 	public void startVehicles()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "Vehicle start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		String error = "";
-		
+								
 		try {
 						
 			ImportDTO imports = new HomelandClient().openImport(Type.VEHICLE);
@@ -248,8 +222,6 @@ public class HomelandService {
 						
 						count ++;
 						firstId = Long.valueOf(c.getId()); 
-						error = "["+firstId+"] "+ c.getVin();
-						System.out.println(error);
 					}
 				}
 				else
@@ -261,29 +233,18 @@ public class HomelandService {
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
 			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Vehicle END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
-			
 		}catch(Exception e)
-		{
-			//mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending Vehicle", 
-			//		DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-				//						+e.getMessage());			
+		{		
 			e.printStackTrace();
 		}
 	}
 	
 	
 	
-	
-	@Scheduled(cron="0 35 00 * * *")
+	@Scheduled(cron="0 00 16 * * *")
 	public void startPhones()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "Phone start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		String error = "";
-		
+								
 		try {
 						
 			ImportDTO imports = new HomelandClient().openImport(Type.PHONE);
@@ -318,8 +279,6 @@ public class HomelandService {
 						
 						count ++;
 						firstId = Long.valueOf(c.getId()); 
-						error = "["+firstId+"] "+ c.getPhone();
-						System.out.println(error);
 					}
 				}
 				else
@@ -331,47 +290,46 @@ public class HomelandService {
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
 			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Phone END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
-			
 		}catch(Exception e)
 		{
-			//mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending Phone", 
-			//		DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-				//						+e.getMessage());			
 			e.printStackTrace();
 		}
 	}
 	
 	
 	
-	@Scheduled(cron="0 40 00 * * *")
+	@Scheduled(cron="0 30 02 * * *")
+	//@Scheduled(cron="0 32 09 * * *")
 	public void startTicket()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "TICKET start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		String error = "";
-		
+								
 		try {
 						
 			ImportDTO imports = new HomelandClient().openImport(Type.TICKET);
 			
-			Long firstId = new HomelandClient().getLastRid(Type.TICKET);
-			Integer LIMIT = 50000;
-			boolean cont = true;
+			String lastDate = new HomelandClient().getLastTicketRecDate();
+			Date date = DateUtil.toDate(lastDate);
+			date = DateUtil.addDaysToDate(date, 1);
 			int count = 0;
 			
-			while(cont)
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			
+			System.out.println(date + " VS " +cal.getTime());
+			
+			while(date.before(cal.getTime()))
 			{
-				List<Ticket> tickets = ticketDAO.searchTicket(firstId + 1, LIMIT);
+				
+				List<Ticket> tickets = ticketDAO.searchTicket(date);
 				if(tickets != null && !tickets.isEmpty())
 				{
+					List<TicketDTO> list = new ArrayList<>();
 					for(Ticket c : tickets)
 					{
 						TicketDTO dto = new TicketDTO();
-						
-
 						dto.setId((int)c.getId());
 						dto.setAmount(c.getAmount());
 						dto.setOfficer(c.getOfficer());
@@ -381,49 +339,45 @@ public class HomelandService {
 						dto.setProducer(c.getProducer());
 						dto.setSerialNo(c.getSerialNo());
 						dto.setTicketDate(DateUtil.formatTimestamp(c.getTicketDate()));
+						dto.setTimsRecDate(DateUtil.formatTimestamp(c.getRecordDate()));
 						dto.setTicketPlace(c.getTicketAddress());
 						dto.setViolator(c.getViolator());
 						dto.setViolatorNid(c.getViolatorNid());
 						dto.setStatus(c.getPaid()>0?ITicket.PAYED:ITicket.NOT_PAYED);
 						
-						new HomelandClient().saveTicket(dto);
+						list.add(dto);
 						
 						count ++;
-						firstId = Long.valueOf(c.getId()); 
-						error = "["+firstId+"] "+ c.getSerialNo();
-						System.out.println(error);
+
 					}
+					
+					TicketList tl = new TicketList();
+					tl.setTickets(list);
+					System.out.println("SENDING TICKETS..."+list.size()+" Records");
+					new HomelandClient().saveTicket(tl);
+					System.out.println("TICKETS SENDED ("+DateUtil.formatDate(date)+")");
+					
 				}
-				else
-				{
-					cont = false;
-				}
+				
+				date = DateUtil.addDaysToDate(date, 1);
+				
 			}
 			
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
-			
-			//mailService.sendEmail("bruno.veizaj@asp.gov.al", "TICKET END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
+						
 			
 		}catch(Exception e)
-		{
-			//mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending Ticket", 
-			//		DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-				//						+e.getMessage());			
+		{		
 			e.printStackTrace();
 		}
 	}
 	
 	
-	@Scheduled(cron="0 30 02 * * *")
+	@Scheduled(cron="0 00 03 * * *")
 	public void startPhotoPassports()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "Photo IDP start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		String error = "";
-		
+								
 		try {
 						
 			ImportDTO imports = new HomelandClient().openImport(Type.PHOTO_PASSPORT);
@@ -450,8 +404,6 @@ public class HomelandService {
 						
 						count ++;
 						firstId = Long.valueOf(c.getId()); 
-						error = "["+firstId+"] "+ c.getIdp();
-						System.out.println(error);
 					}
 				}
 				else
@@ -463,26 +415,16 @@ public class HomelandService {
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
 			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Photo IDP END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
-			
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending Photo IDP", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{			
 			e.printStackTrace();
 		}
 	}
 	
-	@Scheduled(cron="0 40 02 * * *")
+	@Scheduled(cron="0 30 03 * * *")
 	public void startPhotoCard()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "Photo IDC start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		String error = "";
-		
+								
 		try {
 						
 			ImportDTO imports = new HomelandClient().openImport(Type.PHOTO_CARD);
@@ -509,8 +451,6 @@ public class HomelandService {
 						
 						count ++;
 						firstId = Long.valueOf(c.getId()); 
-						error = "["+firstId+"] "+ c.getIdc();
-						System.out.println(error);
 					}
 				}
 				else
@@ -521,46 +461,49 @@ public class HomelandService {
 			
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
-			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Photo IDC END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
-			
+						
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error sending Photo IDC", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{				
 			e.printStackTrace();
 		}
 	}
 	
 	
 	@SuppressWarnings("unchecked")
-	@Scheduled(cron="0 00 01 * * *")
+	@Scheduled(cron="0 15 00 * * *")
+	//@Scheduled(cron="0 25 10 * * *")
 	public void startBorderExitAl()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "BORDER AL_EXIT start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		//String error = "";
-		
+								
 		try {
 						
+			System.out.println(DateUtil.formatDate(Calendar.getInstance().getTime()) + " EXIT_AL OPEN IMPORT");
 			ImportDTO imports = new HomelandClient().openImport(Type.BORDER);
 			
 			String lastDate = new HomelandClient().getLastBorderDate(IBorder.EXIT, false);
+			System.out.println("LAST_DATE: "+lastDate);
 			Date date = DateUtil.toDate(lastDate);
 			date = DateUtil.addDaysToDate(date, 1);
 			int count = 0;
 			
-			while(date.before(Calendar.getInstance().getTime()))
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			
+			System.out.println(date + " VS " +cal.getTime());
+			
+			while(date.before(cal.getTime()))
 			{
-				System.out.println("startBorderExitAl: "+date);
+				System.out.println(DateUtil.formatDate(date)+": DALJE-AL");
 				
 				List<ExitAL> events = (List<ExitAL>)borderDAO.searchBorder(date, IBorder.EXIT, false);
 				
 				if(events != null && !events.isEmpty())
 				{
+					System.out.println("HAS_DATA DALJE-AL");
+					
 					BorderList bl = new BorderList();
 					List<BorderDTO> borders = new ArrayList<>();
 					
@@ -568,6 +511,7 @@ public class HomelandService {
 					{
 						BorderDTO dto = new BorderDTO();
 						dto.setCrossingDate(DateUtil.formatTimestamp(c.getDoe()));
+						dto.setTimsRecordDate(DateUtil.formatTimestamp(c.getId().getCrossingDate()));
 						dto.setCrossingGate(c.getBcg());
 						dto.setDob(c.getDob());
 						dto.setDocNo(c.getId().getDocNo());
@@ -587,15 +531,19 @@ public class HomelandService {
 						borders.add(dto);
 						
 						count ++;
-					//	error = ""+c.getId();
-					//	System.out.println(error);
+
 					}
 					
+					
 					bl.setBorders(borders);
+					System.out.println("DALJE-AL SENDING DATA.....");
 					new HomelandClient().saveBorder(bl);
+					System.err.println("DATA SENDED DALJE-AL: "+count+" RECORDS");
 				}
-				
-				System.out.println("endBorderExitAl: "+date);
+				else
+				{
+					System.out.println("NO_DATA DALJE-AL");
+				}
 				
 				date = DateUtil.addDaysToDate(date, 1);
 				
@@ -603,15 +551,10 @@ public class HomelandService {
 			
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
-			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "AL_EXIT END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
+			System.out.println("CLOSE IMPORT DALJE-AL: "+count);
 			
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error AL_EXIT ", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{			
 			e.printStackTrace();
 		}
 	}
@@ -619,32 +562,39 @@ public class HomelandService {
 	
 	
 	@SuppressWarnings("unchecked")
-	@Scheduled(cron="0 05 01 * * *")
+	@Scheduled(cron="0 20 00 * * *")
+	//@Scheduled(cron="0 26 10 * * *")
 	public void startBorderEntryAl()
 	{
 		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "BORDER AL_ENTRY start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		//String error = "";
-		
 		try {
 						
+			System.out.println(DateUtil.formatDate(Calendar.getInstance().getTime()) + " ENTRY_AL OPEN IMPORT");
 			ImportDTO imports = new HomelandClient().openImport(Type.BORDER);
 			
 			String lastDate = new HomelandClient().getLastBorderDate(IBorder.ENTRY, false);
+			System.out.println("LAST_DATE: "+lastDate);
 			Date date = DateUtil.toDate(lastDate);
 			date = DateUtil.addDaysToDate(date, 1);
 			int count = 0;
 			
-			while(date.before(Calendar.getInstance().getTime()))
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			
+			System.out.println(date + " VS " +cal.getTime());
+			while(date.before(cal.getTime()))
 			{
 				
-				System.out.println("startBorderEntryAl: "+date);
+				System.out.println(DateUtil.formatDate(date)+": HYRJE-AL");
 				
 				List<EntryAL> events = (List<EntryAL>)borderDAO.searchBorder(date, IBorder.ENTRY, false);				
 				
 				if(events != null && !events.isEmpty())
 				{
+					System.out.println("HAS_DATA HYRJE-AL: "+events.size()+" RECORDS");
 					BorderList bl = new BorderList();
 					List<BorderDTO> borders = new ArrayList<>();
 					
@@ -652,6 +602,7 @@ public class HomelandService {
 					{
 						BorderDTO dto = new BorderDTO();
 						dto.setCrossingDate(DateUtil.formatTimestamp(c.getDoe()));
+						dto.setTimsRecordDate(DateUtil.formatTimestamp(c.getId().getCrossingDate()));
 						dto.setCrossingGate(c.getBcg());
 						dto.setDob(c.getDob());
 						dto.setDocNo(c.getId().getDocNo());
@@ -672,65 +623,66 @@ public class HomelandService {
 						borders.add(dto);
 												
 						count ++;
-						//error = ""+c.getId();
-					//	System.out.println(error);
 					}
 					
 					bl.setBorders(borders);
+					System.out.println("HYRJE-AL SENDING DATA.....");
 					new HomelandClient().saveBorder(bl);
+					System.err.println("DATA SENDED HYRJE-AL: "+count+" RECORDS");
 				}
-				
-				System.out.println("endBorderEntryAl: "+date);
-				
+				else
+				{
+					System.out.println("NO_DATA HYRJE-AL");
+				}
 				date = DateUtil.addDaysToDate(date, 1);
 				
 			}
 			
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
-			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "AL_ENTRY END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
+			System.out.println("CLOSE IMPORT HYRJE-AL: "+count);
 			
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error Al Entry", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{			
 			e.printStackTrace();
 		}
 	}
 	
 	
 	@SuppressWarnings("unchecked")
-	@Scheduled(cron="0 10 01 * * *")
+	@Scheduled(cron="0 25 00 * * *")
+	//@Scheduled(cron="0 27 10 * * *")
 	public void startBorderExitFor()
 	{
 		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "BORDER FOR_EXIT start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		
-		
-		//String error = "";
-		
 		try {
 						
+			System.out.println(DateUtil.formatDate(Calendar.getInstance().getTime()) + " EXIT_FOR OPEN IMPORT");
 			ImportDTO imports = new HomelandClient().openImport(Type.BORDER);
 			
 			String lastDate = new HomelandClient().getLastBorderDate(IBorder.EXIT, true);
+			System.out.println("LAST_DATE: "+lastDate);
 			Date date = DateUtil.toDate(lastDate);
 			date = DateUtil.addDaysToDate(date, 1);
 			int count = 0;
 			
-			while(date.before(Calendar.getInstance().getTime()))
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			
+			System.out.println(date + " VS " +cal.getTime());
+			while(date.before(cal.getTime()))
 			{
 				
-				System.out.println("startBorderExitFor: "+date);
+				System.out.println(DateUtil.formatDate(date)+": DALJE-FOR");
 				
 				List<ExitFOR> events = (List<ExitFOR>)borderDAO.searchBorder(date, IBorder.EXIT, true);
 				
 				if(events != null && !events.isEmpty())
 				{
+					System.out.println("HAS_DATA DALJE_FOR");
 					BorderList bl = new BorderList();
 					List<BorderDTO> borders = new ArrayList<>();
 					
@@ -738,6 +690,7 @@ public class HomelandService {
 					{
 						BorderDTO dto = new BorderDTO();
 						dto.setCrossingDate(DateUtil.formatTimestamp(c.getDoe()));
+						dto.setTimsRecordDate(DateUtil.formatTimestamp(c.getId().getCrossingDate()));
 						dto.setCrossingGate(c.getBcg());
 						dto.setDob(c.getDob());
 						dto.setDocNo(c.getId().getDocNo());
@@ -755,17 +708,18 @@ public class HomelandService {
 						dto.setTravel(c.getTravel());
 						
 						borders.add(dto);
-												
 						count ++;
-				//		error = ""+c.getId();
 						
 					}
 					
 					bl.setBorders(borders);
+					System.out.println("DALJE-FOR SENDING DATA.....");
 					new HomelandClient().saveBorder(bl);
-					
-					System.out.println("endBorderExitFor: "+date);
-					
+					System.err.println("DATA SENDED DALJE-FOR: "+count+" RECORDS");
+				}
+				else
+				{
+					System.out.println("NO_DATA DALJE_FOR");
 				}
 				
 				date = DateUtil.addDaysToDate(date, 1);
@@ -774,15 +728,10 @@ public class HomelandService {
 			
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
-			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "FOR_EXIT END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
-			
+			System.out.println("CLOSE IMPORT DALJE-FOR: "+count);
+						
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error FOR_EXIT", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{		
 			e.printStackTrace();
 		}
 	}
@@ -790,31 +739,38 @@ public class HomelandService {
 	
 	
 	@SuppressWarnings("unchecked")
-	@Scheduled(cron="0 15 01 * * *")
+	@Scheduled(cron="0 30 00 * * *")
+	//@Scheduled(cron="0 28 10 * * *")
 	public void startBorderEntryFOR()
 	{
 		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "BORDER FOR_ENTRY start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		//String error = "";
-		
 		try {
 						
+			System.out.println(DateUtil.formatDate(Calendar.getInstance().getTime()) + " ENTRY_FOR OPEN IMPORT");
 			ImportDTO imports = new HomelandClient().openImport(Type.BORDER);
 			
 			String lastDate = new HomelandClient().getLastBorderDate(IBorder.ENTRY, true);
+			System.out.println("LAST_DATE: "+lastDate);
 			Date date = DateUtil.toDate(lastDate);
 			date = DateUtil.addDaysToDate(date, 1);
 			int count = 0;
 			
-			while(date.before(Calendar.getInstance().getTime()))
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			
+			System.out.println(date + " VS " +cal.getTime());
+			while(date.before(cal.getTime()))
 			{
-				System.out.println("startBorderEntryFOR: "+date);
+				System.out.println(DateUtil.formatDate(date)+": HYRJE-FOR");
 				
 				List<EntryFOR> events = (List<EntryFOR>)borderDAO.searchBorder(date, IBorder.ENTRY, true);
 								
 				if(events != null && !events.isEmpty())
 				{
+					System.out.println("HAS_DATA HYRJE_FOR");
 					BorderList bl = new BorderList();
 					List<BorderDTO> borders = new ArrayList<>();
 					
@@ -822,6 +778,7 @@ public class HomelandService {
 					{
 						BorderDTO dto = new BorderDTO();
 						dto.setCrossingDate(DateUtil.formatTimestamp(c.getDoe()));
+						dto.setTimsRecordDate(DateUtil.formatTimestamp(c.getId().getCrossingDate()));
 						dto.setCrossingGate(c.getBcg());
 						dto.setDob(c.getDob());
 						dto.setDocNo(c.getId().getDocNo());
@@ -845,31 +802,29 @@ public class HomelandService {
 						
 						
 						count ++;
-						//error = ""+c.getId();
 					}
 					
 					bl.setBorders(borders);
+					System.out.println("HYRJE-FOR SENDING DATA.....");
 					new HomelandClient().saveBorder(bl);
+					System.err.println("DATA SENDED HYRJE-FOR: "+count+" RECORDS");
 					
 				}
-				
-				System.out.println("endBorderEntryFOR: "+date);
-				
+				else
+				{
+					System.out.println("NO_DATA HYRJE_FOR");
+				}
+								
 				date = DateUtil.addDaysToDate(date, 1);
 				
 			}
 			
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
-			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "FOR_ENTRY END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
+			System.out.println("CLOSE IMPORT HYRJE-FOR: "+count);
 			
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error FOR Entry", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{			
 			e.printStackTrace();
 		}
 	}
@@ -877,13 +832,9 @@ public class HomelandService {
 	
 	
 	@SuppressWarnings("unchecked")
-	//@Scheduled(cron="0 38 12 * * *")
+	//@Scheduled(cron="0 01 00 * * *")
 	public void startBorderExitAlDown()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "BORDER AL_EXIT start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		//String error = "";
 		
 		try {
 						
@@ -896,7 +847,7 @@ public class HomelandService {
 			
 			while(date.after(DateUtil.toDate("01.01.2009")))
 			{
-				System.out.println("startBorderExitAlDown: "+date);
+				System.out.println(DateUtil.formatDate(date)+": DALJE-AL_DOWN");
 				
 				List<ExitAL> events = (List<ExitAL>)borderDAO.searchBorder(date, IBorder.EXIT, false);
 				
@@ -909,6 +860,7 @@ public class HomelandService {
 					{
 						BorderDTO dto = new BorderDTO();
 						dto.setCrossingDate(DateUtil.formatTimestamp(c.getDoe()));
+						dto.setTimsRecordDate(DateUtil.formatTimestamp(c.getId().getCrossingDate()));
 						dto.setCrossingGate(c.getBcg());
 						dto.setDob(c.getDob());
 						dto.setDocNo(c.getId().getDocNo());
@@ -928,16 +880,12 @@ public class HomelandService {
 						borders.add(dto);
 						
 						count ++;
-					//	error = ""+c.getId();
-					//	System.out.println(error);
 					}
 					
 					bl.setBorders(borders);
 					new HomelandClient().saveBorder(bl);
 				}
-				
-				System.out.println("endBorderExitAl: "+date);
-				
+								
 				date = DateUtil.addDaysToDate(date, -1);
 				
 			}
@@ -945,28 +893,18 @@ public class HomelandService {
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
 			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "AL_EXIT END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
-			
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error AL_EXIT ", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{			
 			e.printStackTrace();
 		}
 	}
 	
 	
 	@SuppressWarnings("unchecked")
-	//@Scheduled(cron="0 39 12 * * *")
+	//@Scheduled(cron="0 00 00 * * *")
 	public void startBorderEntryAlDown()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "BORDER AL_ENTRY start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		//String error = "";
-		
+
 		try {
 						
 			ImportDTO imports = new HomelandClient().openImport(Type.BORDER);
@@ -979,7 +917,7 @@ public class HomelandService {
 			while(date.after(DateUtil.toDate("01.01.2009")))
 			{
 				
-				System.out.println("startBorderEntryAlDown: "+date);
+				System.out.println(DateUtil.formatDate(date)+": HYRJE-AL_DOWN");
 				
 				List<EntryAL> events = (List<EntryAL>)borderDAO.searchBorder(date, IBorder.ENTRY, false);				
 				
@@ -992,6 +930,7 @@ public class HomelandService {
 					{
 						BorderDTO dto = new BorderDTO();
 						dto.setCrossingDate(DateUtil.formatTimestamp(c.getDoe()));
+						dto.setTimsRecordDate(DateUtil.formatTimestamp(c.getId().getCrossingDate()));
 						dto.setCrossingGate(c.getBcg());
 						dto.setDob(c.getDob());
 						dto.setDocNo(c.getId().getDocNo());
@@ -1012,16 +951,13 @@ public class HomelandService {
 						borders.add(dto);
 												
 						count ++;
-						//error = ""+c.getId();
-					//	System.out.println(error);
+
 					}
 					
 					bl.setBorders(borders);
 					new HomelandClient().saveBorder(bl);
 				}
-				
-				System.out.println("endBorderEntryAl: "+date);
-				
+								
 				date = DateUtil.addDaysToDate(date, -1);
 				
 			}
@@ -1029,29 +965,17 @@ public class HomelandService {
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
 			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "AL_ENTRY END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
-			
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error Al Entry", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{		
 			e.printStackTrace();
 		}
 	}
 	
 	
 	@SuppressWarnings("unchecked")
-	//@Scheduled(cron="0 40 12 * * *")
+	//@Scheduled(cron="0 20 14 * * *")
 	public void startBorderExitForDown()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "BORDER FOR_EXIT start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		
-		
-		//String error = "";
 		
 		try {
 						
@@ -1065,7 +989,7 @@ public class HomelandService {
 			while(date.after(DateUtil.toDate("01.01.2009")))
 			{
 				
-				System.out.println("startBorderExitForDown: "+date);
+				System.out.println(DateUtil.formatDate(date)+": DALJE-FOR_DOWN");
 				
 				List<ExitFOR> events = (List<ExitFOR>)borderDAO.searchBorder(date, IBorder.EXIT, true);
 				
@@ -1078,6 +1002,7 @@ public class HomelandService {
 					{
 						BorderDTO dto = new BorderDTO();
 						dto.setCrossingDate(DateUtil.formatTimestamp(c.getDoe()));
+						dto.setTimsRecordDate(DateUtil.formatTimestamp(c.getId().getCrossingDate()));
 						dto.setCrossingGate(c.getBcg());
 						dto.setDob(c.getDob());
 						dto.setDocNo(c.getId().getDocNo());
@@ -1097,15 +1022,12 @@ public class HomelandService {
 						borders.add(dto);
 												
 						count ++;
-				//		error = ""+c.getId();
 						
 					}
 					
 					bl.setBorders(borders);
 					new HomelandClient().saveBorder(bl);
-					
-					System.out.println("endBorderExitFor: "+date);
-					
+										
 				}
 				
 				date = DateUtil.addDaysToDate(date, -1);
@@ -1114,15 +1036,10 @@ public class HomelandService {
 			
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
-			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "FOR_EXIT END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
+						
 			
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error FOR_EXIT", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{			
 			e.printStackTrace();
 		}
 	}
@@ -1130,13 +1047,9 @@ public class HomelandService {
 	
 	
 	@SuppressWarnings("unchecked")
-	//@Scheduled(cron="0 41 12 * * *")
+	//@Scheduled(cron="0 30 14 * * *")
 	public void startBorderEntryFORDown()
 	{
-		
-		//mailService.sendEmail("bruno.veizaj@asp.gov.al", "BORDER FOR_ENTRY start", "Filloi\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-				
-		//String error = "";
 		
 		try {
 						
@@ -1149,7 +1062,7 @@ public class HomelandService {
 			
 			while(date.before(Calendar.getInstance().getTime()))
 			{
-				System.out.println("startBorderEntryFORDown: "+date);
+				System.out.println(DateUtil.formatDate(date)+": HYRJE-FOR_DOWN");
 				
 				List<EntryFOR> events = (List<EntryFOR>)borderDAO.searchBorder(date, IBorder.ENTRY, true);
 								
@@ -1162,6 +1075,7 @@ public class HomelandService {
 					{
 						BorderDTO dto = new BorderDTO();
 						dto.setCrossingDate(DateUtil.formatTimestamp(c.getDoe()));
+						dto.setTimsRecordDate(DateUtil.formatTimestamp(c.getId().getCrossingDate()));
 						dto.setCrossingGate(c.getBcg());
 						dto.setDob(c.getDob());
 						dto.setDocNo(c.getId().getDocNo());
@@ -1185,7 +1099,6 @@ public class HomelandService {
 						
 						
 						count ++;
-						//error = ""+c.getId();
 					}
 					
 					bl.setBorders(borders);
@@ -1193,7 +1106,6 @@ public class HomelandService {
 					
 				}
 				
-				System.out.println("endBorderEntryFOR: "+date);
 				
 				date = DateUtil.addDaysToDate(date, -1);
 				
@@ -1201,15 +1113,10 @@ public class HomelandService {
 			
 			imports.setTotal(count);
 			new HomelandClient().closeImport(imports);
-			
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "FOR_ENTRY END", "MBAROI ["+count+"]\n"+DateUtil.formatTimestamp(Calendar.getInstance().getTime()));
-			
+						
 			
 		}catch(Exception e)
-		{
-		//	mailService.sendEmail("bruno.veizaj@asp.gov.al", "Error FOR Entry", 
-		//			DateUtil.formatTimestamp(Calendar.getInstance().getTime())+"\n"+error+"\n\n"
-		//								+e.getMessage());			
+		{			
 			e.printStackTrace();
 		}
 	}

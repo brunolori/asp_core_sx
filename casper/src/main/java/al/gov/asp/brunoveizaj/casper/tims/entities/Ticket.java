@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 
@@ -23,6 +25,7 @@ public class Ticket implements Serializable {
 	private String serialNo;
 	@Column(name="OFFICER")
 	private String officer;
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="TICKET_DATE")
 	private Date ticketDate;
 	@Column(name="TICKET_ADDRESS")
@@ -43,7 +46,9 @@ public class Ticket implements Serializable {
 	private String violatorNid;
 	@Column(name="PAYED")
 	private Integer paid;
-	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="RECORD_DATE")
+	private Date recordDate;
 	
 	
 	public long getId() {
@@ -123,6 +128,12 @@ public class Ticket implements Serializable {
 	}
 	public void setPaid(Integer paid) {
 		this.paid = paid;
+	}
+	public Date getRecordDate() {
+		return recordDate;
+	}
+	public void setRecordDate(Date recordDate) {
+		this.recordDate = recordDate;
 	}
 	
 	
